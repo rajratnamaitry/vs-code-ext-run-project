@@ -1,0 +1,1 @@
+export { ScriptsTreeDataProvider } from './tree-data-provider';

@@ -1,6 +1,7 @@
 {
 	"name": "run-project",
 	"displayName": "run project",
+	"publisher": "rajratnamaitry",
 	"description": "run project using package.json",
 	"version": "0.0.1",
 	"engines": {
@@ -9,9 +10,19 @@
 	"categories": [
 		"Other"
 	],
+	"icon": "icon-angular.png",
 	"activationEvents": [
-		"onCommand:run-project.helloWorld"
+		"workspaceContains:**/package.json",
+		"workspaceContains:**/.package.json"
 	],
+	"author": {
+        "name": "rajratna maitry",
+        "email": "rajratnamaitry@gmail.com"
+	},
+	"repository": {
+        "type": "git",
+        "url": "https://github.com/rajratnamaitry/runNpmProject/"
+    },
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
@@ -19,7 +30,24 @@
 				"command": "run-project.helloWorld",
 				"title": "Hello World"
 			}
-		]
+		],
+		"viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "angular",
+                    "title": "Angular",
+                    "icon": "angular.svg"
+                }
+            ]
+        },
+        "views": {
+            "angular": [
+                {
+                    "id": "angular-runProject",
+                    "name": "Scripts"
+                }
+            ]
+        }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
