@@ -10,6 +10,6 @@ Run and Stop button added
 \!\[demo\]\(demo.png\)
 
 
-### 1.0.0
+### 1.0.1
 
 **Enjoy!**
