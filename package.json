@@ -41,7 +41,7 @@
             "activitybar": [
                 {
                     "id": "angular",
-                    "title": "Angular",
+                    "title": "Run Project",
                     "icon": "angular.svg"
                 }
             ]
