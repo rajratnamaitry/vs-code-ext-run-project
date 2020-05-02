@@ -27,8 +27,14 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "run-project.helloWorld",
-				"title": "Hello World"
+				"command": "run-project.scriptRun",
+				"title": "Run",
+				"icon":"$(run)"
+			},
+			{
+				"command": "run-project.scriptStop",
+				"title": "Stop",
+				"icon":"$(debug-stop)"
 			}
 		],
 		"viewsContainers": {
@@ -47,7 +53,21 @@
                     "name": "Scripts"
                 }
             ]
-        }
+		},
+		"menus": {
+			"view/item/context": [
+				{
+					"command": "run-project.scriptStop",
+					"when": "viewItem == run",
+					"group": "inline"
+				},
+				{
+					"command": "run-project.scriptRun",
+					"when": "viewItem == ready",
+					"group": "inline"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

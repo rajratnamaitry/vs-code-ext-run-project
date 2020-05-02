@@ -2,7 +2,6 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { ScriptsTreeDataProvider } from './view';
-
 let treeDataProvider: vscode.TreeView<vscode.TreeItem> | undefined;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -15,20 +14,31 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-
-	let disposable = vscode.commands.registerCommand('run-project.helloWorld',  (contextUri?: vscode.Uri,
+	const runningTask:any= {};
+	const scriptTree = new ScriptsTreeDataProvider(vscode.workspace.rootPath+'',runningTask);
+	let disposable = vscode.commands.registerCommand('run-project.scriptRun',  (contextUri?: any,
 		options?: { name?: string , excu?: string , task: any}) => {
 		// The code you place here will be executed every time your command is executed
-		const task = options?.task;
+		let task = options?.task;
+		if(!task){
+			task = contextUri['command']['arguments'][1]['task'];
+		}
 		vscode.tasks.executeTask(task).then(function (value:any) {
-			vscode.window.showInformationMessage('Command(s) are already running!');
+			vscode.window.showInformationMessage(value.task.name +' Command(s) are already running!');
+			runningTask[value.task.name] = value;
+			scriptTree.refresh();
 			return value;
 		}, function(e) {
 			console.error('I am error',e);
 		});
 	});
+	vscode.commands.registerCommand('run-project.scriptStop', (param?) => {
+		runningTask[param.command.arguments[1].name].terminate();
+		delete runningTask[param.command.arguments[1].name];
+		scriptTree.refresh();
+	});
 	treeDataProvider = vscode.window.createTreeView('angular-runProject', {
-		treeDataProvider: new ScriptsTreeDataProvider(vscode.workspace.rootPath+''),
+		treeDataProvider: scriptTree,
 	});
 	treeDataProvider.message = `List of Script`;
 	context.subscriptions.push(disposable);
