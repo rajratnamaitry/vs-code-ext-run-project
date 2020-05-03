@@ -47,7 +47,7 @@ export class ScriptsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
                     item.command = {
                         title: `RUN ${param}` + appendText,
                         command: 'run-project.scriptRun',
-                        arguments: [undefined,{ name:param, excu : packageJson.scripts[param] , task }]
+                        arguments: [task]
                     };
                     item.iconPath = this.iconPath;
                     item.contextValue = this._runningTask[param] ? 'run' : 'ready';
