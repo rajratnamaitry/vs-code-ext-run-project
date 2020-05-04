@@ -33,7 +33,7 @@ function scriptRun (param?: any) {
 	}
 	vscode.tasks.executeTask(task).then(function (value:any) {
 		vscode.window.showInformationMessage(value.task.name +' Command(s) are already running!');
-		runningTask[value.task.name] = value;
+		runningTask[value.task['definition']['index']] = value;
 		scriptTree.refresh();
 		return value;
 	}, function(e) {
@@ -41,7 +41,7 @@ function scriptRun (param?: any) {
 	});
 }
 function scriptStop(param: any){
-	const index = param.command.arguments[0].name;
+	const index = param.command.arguments[0]['definition']['index'];
 	runningTask[index].terminate();
 	delete runningTask[index];
 	scriptTree.refresh();
