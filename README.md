@@ -1,15 +1,17 @@
 # run-project README
 
 Run Angular Project on Local with one click by using Package.json scripts.
-\!\[runProjectView\]\(runProjectView.png\)
+![runProjectView](runProjectView.png)
 
 ## Features
 
 Run and Stop button added
 
-\!\[demo\]\(demo.png\)
+![demo](demo.gif)
 
 
-### 1.0.1
+### 1.1.0
+
+Sub folder issue fix
 
 **Enjoy!**

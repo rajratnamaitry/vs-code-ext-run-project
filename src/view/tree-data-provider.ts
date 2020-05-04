@@ -6,11 +6,13 @@ import { ThemeIcon, Task, TaskDefinition, ProcessExecution, TaskScope, ShellExec
 export class ScriptsTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
     public pathData: any;
     iconPath: vscode.Uri | vscode.ThemeIcon | undefined;
+    iconPathFolder: vscode.Uri | vscode.ThemeIcon | undefined;
     private _onDidChangeTreeData = new vscode.EventEmitter();
     readonly onDidChangeTreeData: vscode.Event<any | undefined> = this._onDidChangeTreeData.event;
 
     constructor(private workspaceRoot: string, private _runningTask: any) {
         this.iconPath = new ThemeIcon('wrench') ;
+        this.iconPathFolder = new ThemeIcon('folder') ;
     }
 
 	refresh(): void {
@@ -25,24 +27,42 @@ export class ScriptsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
             vscode.window.showInformationMessage('No Package.json in empty workspace');
             return Promise.resolve([]);
         }
-        const packageJsonFile = this._getPackageJson(path.join(this.workspaceRoot, 'package.json'));
+        let workspacePath = '';
+        if(!element){
+            workspacePath = this.workspaceRoot;
+        } else {
+            workspacePath = path.join(element.description+'');
+        }
+        const packageJsonFile = this._getPackageJson(path.join(workspacePath,'package.json'),workspacePath);
         if(packageJsonFile.length > 0){
             return packageJsonFile.map((schematicName: any) => schematicName );
+        }else {
+            return this._getSubFolder(workspacePath);
         }
-        return Promise.resolve([]);
     }
-
-    private _getPackageJson(packageJsonPath: string) {
+    private _getSubFolder(folderPath: string){
+        const folders = this._getDirectories(folderPath);
+        return folders.map((folder)=>{
+            const item = new vscode.TreeItem(folder, vscode.TreeItemCollapsibleState.Collapsed);
+            item.iconPath = this.iconPathFolder;
+            item.description = path.join(folderPath,folder);
+            item.contextValue = 'folder';
+            return item;
+        });
+    }
+    private _getPackageJson(packageJsonPath: string,folderPath : string) {
         if (this.pathExists(packageJsonPath)) {
             const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
             delete packageJson.scripts['ng'];
             return packageJson.scripts
                 ? Object.keys(packageJson.scripts)
                 .map((param: any) => {
-                    const appendText = this._runningTask[param] ? ' (running)' : '';
+                    const index = param+folderPath.trim();
+                    const appendText = this._runningTask[index] ? ' (running)' : '';
                     const item = new vscode.TreeItem(param + appendText, vscode.TreeItemCollapsibleState.None);
-                    let tdef: TaskDefinition = {type : 'npm'};
-                    const task = new Task(tdef,param,'npm', new ShellExecution(packageJson.scripts[param]));
+                    let tdef: TaskDefinition = {type : 'npm' , index};
+                    const task = new Task(tdef,param,'npm', new ShellExecution(packageJson.scripts[param],
+                        {cwd: path.join(folderPath) }));
                     task.isBackground = true;
                     item.command = {
                         title: `RUN ${param}` + appendText,
@@ -50,7 +70,7 @@ export class ScriptsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
                         arguments: [task]
                     };
                     item.iconPath = this.iconPath;
-                    item.contextValue = this._runningTask[param] ? 'run' : 'ready';
+                    item.contextValue = this._runningTask[index] ? 'run' : 'ready';
                     return item;
                 }): [];
         } else {
