@@ -1,9 +1,9 @@
 {
 	"name": "run-project",
-	"displayName": "run project",
+	"displayName": "Run project",
 	"publisher": "rajratnamaitry",
 	"description": "run project using package.json",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
