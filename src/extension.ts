@@ -47,4 +47,6 @@ function scriptStop(param: any){
 	scriptTree.refresh();
 }
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	scriptTree.refresh();
+}

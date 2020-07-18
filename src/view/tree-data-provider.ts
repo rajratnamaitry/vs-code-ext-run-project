@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ThemeIcon, Task, TaskDefinition, ProcessExecution, TaskScope, ShellExecution } from 'vscode';
+import { ThemeIcon, Task, TaskDefinition, ShellExecution } from 'vscode';
 
 export class ScriptsTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
     public pathData: any;
