@@ -4,10 +4,11 @@ All notable changes to the "run-project" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [2.0.0] - 2025-06-13
+## [2.1.0] - 2025-06-13
 
 - Added support for running a configurable pre-script before each script execution (via settings or command).
 - Added `Set Pre-Script` command to easily set or clear the pre-script from the command palette.
+- Added support for choosing the package manager (`npm`, `yarn`, or `pnpm`) via settings or command.
 
 ## [1.1.1] - 2025-06-13
 

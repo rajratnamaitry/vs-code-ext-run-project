@@ -4,6 +4,7 @@ const path = require('path');
 
 let scriptTerminal = null;
 let preScript = vscode.workspace.getConfiguration('scriptDeck').get('preScript', '');
+let packageManager = vscode.workspace.getConfiguration('scriptDeck').get('packageManager', 'npm');
 
 class ScriptTreeItem extends vscode.TreeItem {
     constructor(scriptName, scriptCmd) {
@@ -52,6 +53,18 @@ async function setPreScript() {
     vscode.window.showInformationMessage(preScript ? `Pre-script set: ${preScript}` : 'Pre-script cleared.');
 }
 
+async function choosePackageManager() {
+    const options = ['npm', 'yarn', 'pnpm'];
+    const selected = await vscode.window.showQuickPick(options, {
+        placeHolder: 'Select the package manager to use for running scripts'
+    });
+    if (selected) {
+        packageManager = selected;
+        await vscode.workspace.getConfiguration('scriptDeck').update('packageManager', packageManager, vscode.ConfigurationTarget.Workspace);
+        vscode.window.showInformationMessage(`ScriptDeck will use: ${packageManager}`);
+    }
+}
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -80,6 +93,10 @@ function activate(context) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand('run-project.choosePackageManager', choosePackageManager)
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('run-project.runScript', (item) => {
             if (!item || !item.label) return;
             if (scriptTerminal) {
@@ -90,7 +107,7 @@ function activate(context) {
             if (preScript) {
                 scriptTerminal.sendText(preScript);
             }
-            scriptTerminal.sendText(`npm run ${item.label}`);
+            scriptTerminal.sendText(`${packageManager} run ${item.label}`);
         })
     );
 
