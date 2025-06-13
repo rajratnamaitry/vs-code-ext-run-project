@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 let scriptTerminal = null;
+let preScript = vscode.workspace.getConfiguration('scriptDeck').get('preScript', '');
 
 class ScriptTreeItem extends vscode.TreeItem {
     constructor(scriptName, scriptCmd) {
@@ -41,6 +42,16 @@ class ScriptsProvider {
     }
 }
 
+async function setPreScript() {
+    const value = await vscode.window.showInputBox({
+        prompt: 'Enter a one-line script to run before each script (leave empty to clear)',
+        value: preScript
+    });
+    preScript = value || '';
+    await vscode.workspace.getConfiguration('scriptDeck').update('preScript', preScript, vscode.ConfigurationTarget.Workspace);
+    vscode.window.showInformationMessage(preScript ? `Pre-script set: ${preScript}` : 'Pre-script cleared.');
+}
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -65,6 +76,10 @@ function activate(context) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand('run-project.setPreScript', setPreScript)
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('run-project.runScript', (item) => {
             if (!item || !item.label) return;
             if (scriptTerminal) {
@@ -72,6 +87,9 @@ function activate(context) {
             }
             scriptTerminal = vscode.window.createTerminal(`Script: ${item.label}`);
             scriptTerminal.show();
+            if (preScript) {
+                scriptTerminal.sendText(preScript);
+            }
             scriptTerminal.sendText(`npm run ${item.label}`);
         })
     );
