@@ -3,7 +3,7 @@
   "displayName": "ScriptDeck",
   "publisher": "rajratnamaitry",
   "description": "A VS Code extension that lists scripts from package.json and lets you run or stop them directly from a panel.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -48,7 +48,7 @@
       "activitybar": [
         {
           "id": "run-project",
-          "title": "Run Project",
+          "title": "Script Deck",
           "icon": "ScriptDeck.png"
         }
       ]
@@ -57,7 +57,7 @@
       "run-project": [
         {
           "id": "run-project.scriptsView",
-          "name": "Scripts"
+          "name": "Panel"
         }
       ]
     },
