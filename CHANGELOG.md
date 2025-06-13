@@ -4,6 +4,12 @@ All notable changes to the "run-project" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [1.1.1] - 2025-06-13
 
-- Initial release
+- Show scripts from `package.json` in a panel in the Activity Bar.
+- Run and stop scripts from the panel using context menu actions.
+- Scripts execute in a dedicated VS Code terminal and show output live.
+- Only one script can be run at a time; running a new script stops the previous one.
+- Refresh scripts list after updating `package.json`.
+
+## [Unreleased]

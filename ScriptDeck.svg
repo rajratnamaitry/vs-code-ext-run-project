@@ -1,0 +1,17 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" fill="none"></rect>
+  <g stroke="#2d3748" stroke-width="4" fill="none">
+    <path d="M20 16c0-2.2 1.8-4 4-4h52l24 24v76c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4V16z" fill="none"></path>
+    <path d="M76 12v20h20" fill="none"></path>
+  </g>
+
+  <!-- Play Button -->
+  <polygon points="34,54 34,84 64,69" fill="#00e1d6"></polygon>
+
+  <!-- Stop Button -->
+  <rect x="72" y="84" width="30" height="30" rx="3" fill="#ff3c3c"></rect>
+
+  <!-- Code Brackets -->
+  <text x="32" y="42" font-size="18" fill="#2d3748" font-family="monospace">&lt;/&gt;</text>
+  <text x="70" y="72" font-size="16" fill="#2d3748" font-family="monospace">&lt;/&gt;</text>
+</svg>

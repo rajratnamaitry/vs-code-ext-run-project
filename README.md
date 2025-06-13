@@ -1,65 +1,49 @@
-# run-project README
+# ScriptDeck (run-project)
 
-This is the README for your extension "run-project". After writing up a brief description, we recommend including the following sections.
+ScriptDeck is a VS Code extension that lists scripts from your project's `package.json` and lets you run or stop them directly from a panel in the Activity Bar.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Lists all scripts** from your workspace's `package.json` in a dedicated panel.
+- **Run any script** with a single click (context menu or inline button).
+- **Stop the running script** from the same panel.
+- **Scripts execute in a VS Code terminal** and show output live.
+- **Refresh scripts** if you update your `package.json`.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![ScriptDeck Screenshot](demo.gif)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Your workspace must contain a `package.json` file with scripts defined.
+- Node.js and npm should be installed and available in your system PATH.
+
+## Usage
+
+1. Open a folder with a `package.json`.
+2. Click the **Run Project** icon in the Activity Bar.
+3. See all available scripts listed.
+4. Right-click a script to **Run Script** or **Stop Script**.
+5. The script runs in a dedicated terminal. You can stop it from the panel.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This extension does not add any custom settings.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Only one script can be run at a time from the panel. Running a new script will stop the previous one.
+- Only scripts from the root `package.json` are shown.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 1.1.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+- Show scripts from `package.json` in a panel.
+- Run and stop scripts from the panel.
+- Scripts run in a VS Code terminal.
 
 ---
 
-## Working with Markdown
+**Enjoy using ScriptDeck!**
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+For feedback or issues, visit the [GitHub repository](https://github.com/rajratnamaitry/runNpmProject/)

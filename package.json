@@ -1,33 +1,84 @@
 {
   "name": "run-project",
   "displayName": "ScriptDeck",
-  "description": "",
+  "publisher": "rajratnamaitry",
+  "description": "A VS Code extension that lists scripts from package.json and lets you run or stop them directly from a panel.",
   "version": "1.1.1",
   "engines": {
     "vscode": "^1.80.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajratnamaitry/runNpmProject/"
+  },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:**/package.json"
+  ],
+  "icon": "ScriptDeck.png",
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "run-project.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "run-project.runScript",
+        "title": "Script Deck",
+        "icon": "$(run)"
+      },
+      {
+        "command": "run-project.stopScript",
+        "title": "Stop Script",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "run-project.refreshScripts",
+        "title": "Refresh Scripts"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "run-project",
+          "title": "Run Project",
+          "icon": "ScriptDeck.png"
+        }
+      ]
+    },
+    "views": {
+      "run-project": [
+        {
+          "id": "run-project.scriptsView",
+          "name": "Scripts"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "run-project.runScript",
+          "when": "viewItem == scriptItem",
+          "group": "inline"
+        },
+        {
+          "command": "run-project.stopScript",
+          "when": "viewItem == scriptItem",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "deploy": "vsce package && vsce publish"
   },
   "devDependencies": {
-    "@types/vscode": "^1.80.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "eslint": "^9.25.1",
+    "@types/vscode": "^1.80.0",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1"
   }
 }
