@@ -9,19 +9,20 @@ ScriptDeck is a VS Code extension that lists scripts from your project's `packag
 - **Stop the running script** from the same panel.
 - **Scripts execute in a VS Code terminal** and show output live.
 - **Refresh scripts** if you update your `package.json`.
-- **Pre-script support:** Run a custom one-line command before each script (configurable in settings).
+- **Pre-script support:** Run a custom one-line command before each script (configurable in settings or via command).
+- **Choose your package manager:** Select between `npm`, `yarn`, or `pnpm` for running scripts.
 
 ![ScriptDeck Screenshot](demo.gif)
 
 ## Requirements
 
 - Your workspace must contain a `package.json` file with scripts defined.
-- Node.js and npm should be installed and available in your system PATH.
+- Node.js and your chosen package manager (`npm`, `yarn`, or `pnpm`) should be installed and available in your system PATH.
 
 ## Usage
 
 1. Open a folder with a `package.json`.
-2. Click the **Run Project** icon in the Activity Bar.
+2. Click the **Script Deck** icon in the Activity Bar.
 3. See all available scripts listed.
 4. Right-click a script to **Run Script** or **Stop Script**.
 5. The script runs in a dedicated terminal. You can stop it from the panel.
@@ -45,40 +46,51 @@ ScriptDeck will show both `start` and `test` scripts in the panel. You can run o
 
 You can configure a command to run before every script executed from ScriptDeck by setting the `scriptDeck.preScript` property in your workspace or user settings.
 
-## How to Set the Pre-Script Property
+#### How to Set the Pre-Script Property
 
 You can set the pre-script in two ways:
 
-### Method 1: Using the Command Palette
+**Method 1: Using the Command Palette**
 
 1. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Windows/Linux) or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Mac) to open the Command Palette.
 2. Type `Set Pre-Script` and select the `ScriptDeck: Set Pre-Script` command.
-3. Enter your desired one-line script (e.g., `echo Pre-script running && timeout /t 5 /nobreak > nul`) and press Enter.
+3. Enter your desired one-line script (e.g., `echo 🔥 ScriptDeck: Preparing to run your script! && timeout /t 2 /nobreak > nul`) and press Enter.
 4. The pre-script will now run before every script you execute from ScriptDeck.
 
-### Method 2: Editing settings.json Directly
+**Method 2: Editing settings.json Directly**
 
 1. Open the Command Palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>).
 2. Type `Preferences: Open Settings (JSON)` and select it.
-3. Add or edit the following lines in your `settings.json`:
-
-   ```json
-   // Example: Run a message and wait 5 seconds before each script
-   "scriptDeck.preScript": "echo Pre-script running && timeout /t 5 /nobreak > nul"
-   ```
-
-   Or, if you need to set up your Node.js environment Or load any modules before running scripts:
+3. Add or edit the following line in your `settings.json`:  
+  if you need to set up your Node.js environment Or load any modules before running scripts:
 
    ```json
    // Example: Set Node.js path before running script
    "scriptDeck.preScript": "C:\\Windows\\System32\\cmd.exe /k \"C:\\Program Files\\nodejs\\nodevars.bat\""
    ```
-
-   > **Note:** Adjust the path as needed for your system. Double backslashes are required in JSON.
+   > **Note:** Adjust the path as needed for your system. Double backslashes are required in JSON.  
+   Or,  
+   ```json
+   // Example: Show a message and wait 2 seconds before each script
+   "scriptDeck.preScript": "echo 🚀 ScriptDeck: Preparing to run your script! && timeout /t 2 /nobreak > nul"
+   ```
+   > **Note:** Adjust the command as needed for your workflow.
 
 4. Save the file.
 
 Now, every time you run a script from ScriptDeck, your pre-script will execute first.
+
+### Package Manager
+
+You can choose which package manager (`npm`, `yarn`, or `pnpm`) ScriptDeck uses to run scripts.
+
+#### How to Set the Package Manager
+
+- Use the Command Palette and run `ScriptDeck: Choose Package Manager`, then select your preferred package manager.
+- Or, set it directly in your `settings.json`:
+  ```json
+  "scriptDeck.packageManager": "npm"
+  ```
 
 ## Known Issues
 
@@ -87,10 +99,11 @@ Now, every time you run a script from ScriptDeck, your pre-script will execute f
 
 ## Release Notes
 
-### 2.0.0
+### 2.1.0
 
 - Added support for running a configurable pre-script before each script execution (via settings or command).
 - Added `Set Pre-Script` command to easily set or clear the pre-script from the command palette.
+- Added support for choosing the package manager (`npm`, `yarn`, or `pnpm`) via settings or command.
 
 ### 1.1.1
 

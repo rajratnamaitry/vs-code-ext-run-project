@@ -3,7 +3,7 @@
   "displayName": "ScriptDeck",
   "publisher": "rajratnamaitry",
   "description": "A VS Code extension that lists scripts from package.json and lets you run or stop them directly from a panel.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -23,21 +23,25 @@
     "commands": [
       {
         "command": "run-project.runScript",
-        "title": "Script Deck:Script Deck",
+        "title": "Script Deck: Run Script",
         "icon": "$(run)"
       },
       {
         "command": "run-project.stopScript",
-        "title": "Script Deck:Stop Script",
+        "title": "Script Deck: Stop Script",
         "icon": "$(debug-stop)"
       },
       {
         "command": "run-project.refreshScripts",
-        "title": "Script Deck:Refresh Scripts"
+        "title": "Script Deck: Refresh Scripts"
       },
       {
         "command": "run-project.setPreScript",
-        "title": "Script Deck:Set Pre-Script"
+        "title": "Script Deck: Set Pre-Script"
+      },
+      {
+        "command": "run-project.choosePackageManager",
+        "title": "Script Deck: Choose Package Manager"
       }
     ],
     "viewsContainers": {
@@ -77,8 +81,14 @@
       "properties": {
         "scriptDeck.preScript": {
           "type": "string",
-          "default": "",
+          "default": "echo 🔥 ScriptDeck: Preparing to run your script!",
           "description": "A one-line script to run before each script executed from the ScriptDeck panel."
+        },
+        "scriptDeck.packageManager": {
+          "type": "string",
+          "default": "npm",
+          "enum": ["npm", "yarn", "pnpm"],
+          "description": "The package manager to use for running scripts."
         }
       }
     }
